@@ -141,6 +141,7 @@ def test_hot_standby_gc(neon_env_builder: NeonEnvBuilder, pause_apply: bool):
     with env.endpoints.create_start(
         branch_name="main",
         endpoint_id="primary",
+        # features=['standby_horizon_leases_experimental'],
     ) as primary:
         with env.endpoints.new_replica_start(
             origin=primary,

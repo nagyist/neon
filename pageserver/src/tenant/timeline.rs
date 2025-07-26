@@ -6591,10 +6591,16 @@ impl Timeline {
             "standby_horizon_which_min",
             tracing::field::debug(&flag_evaluation_result),
         );
-        let min_standby_horizon = match flag_evaluation_result.as_deref() {
-            Some("all") => min_standby_horizon.all,
-            Some("leases") => min_standby_horizon.leases,
-            None | Some("legacy") | Some(_) => min_standby_horizon.legacy,
+        let min_standby_horizon = if cfg!(test) || cfg!(feature = "testing") {
+            // TODO: parametrize rust test / test suite over the feature flag?
+            // For now, test the new feature.
+            min_standby_horizon.leases
+        } else {
+            match flag_evaluation_result.as_deref() {
+                Some("all") => min_standby_horizon.all,
+                Some("leases") => min_standby_horizon.leases,
+                None | Some("legacy") | Some(_) => min_standby_horizon.legacy,
+            }
         };
         if let Some(standby_horizon) = min_standby_horizon {
             if let Some(standby_lag) = new_gc_cutoff.checked_sub(standby_horizon) {
