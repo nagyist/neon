@@ -4835,6 +4835,7 @@ class EndpointFactory:
         endpoint_id: str | None = None,
         grpc: bool | None = None,
         config_lines: list[str] | None = None,
+        features: list[str] | None = None,
     ) -> Endpoint:
         branch_name = origin.branch_name
         assert origin in self.endpoints
@@ -4848,6 +4849,7 @@ class EndpointFactory:
             grpc=grpc,
             hot_standby=True,
             config_lines=config_lines,
+            features=features,
         )
 
 

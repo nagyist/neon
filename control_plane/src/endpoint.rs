@@ -233,7 +233,7 @@ impl ComputeControlPlane {
             drop_subscriptions_before_start,
             grpc,
             reconfigure_concurrency: 1,
-            features,
+            features: features.clone(),
             cluster: None,
             compute_ctl_config: compute_ctl_config.clone(),
         });
@@ -254,7 +254,7 @@ impl ComputeControlPlane {
                 skip_pg_catalog_updates,
                 drop_subscriptions_before_start,
                 reconfigure_concurrency: 1,
-                features: vec![],
+                features,
                 cluster: None,
                 compute_ctl_config,
             })?,
